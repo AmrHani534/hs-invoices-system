@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quotations Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="main-layout">
+    <!-- Sidebar -->
+
+    <div class="content-area wrap">
+        <div class="glass-panel p-8 min-h-[80vh]">
+
+            <!-- Header -->
+            <div class="flex justify-between items-center mb-10">
+                <div>
+                    <h1
+                        class="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-400 to-rose-400">
+                        Quotations (Offers)</h1>
+                    <p class="text-slate-400 text-sm mt-1">Manage sales offers and estimates</p>
+                </div>
+
+                <div class="flex gap-4">
+                    <div class="relative w-72">
+                        <svg class="absolute left-4 top-3.5 w-5 h-5 text-slate-500" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                        <input type="text" id="search" placeholder="Search Offer # or Client..."
+                            class="input-glass pl-12">
+                    </div>
+                    <button onclick="window.location.href='/?mode=quotation'" class="btn-primary btn-glass">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                        </svg>
+                        New Offer
+                    </button>
+                </div>
+            </div>
+
+            <!-- Grid -->
+            <div id="grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="col-span-full text-center py-20 text-slate-500 animate-pulse">Loading quotations...</div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="module" src="js/quotations.js"></script>
+
+</body>
+
+</html>

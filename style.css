@@ -1,0 +1,684 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+    --primary: #6366f1;
+    --primary-light: #818cf8;
+    --primary-glow: rgba(99, 102, 241, 0.4);
+    --bg-dark: #0f172a;
+    --card-bg: rgba(255, 255, 255, 0.03);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --radius-lg: 24px;
+    --radius-md: 16px;
+    --radius-sm: 8px;
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --duration-short: 0.2s;
+    --duration-medium: 0.4s;
+}
+
+/* Base Reset */
+body {
+    font-family: 'Outfit', sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    background-image:
+        radial-gradient(circle at 15% 50%, rgba(99, 102, 241, 0.15), transparent 25%),
+        radial-gradient(circle at 85% 30%, rgba(139, 92, 246, 0.15), transparent 25%);
+    background-attachment: fixed;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+}
+
+/* Glass Components */
+.glass-panel {
+    background: var(--card-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--card-border);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    border-radius: var(--radius-lg);
+    transition: transform var(--duration-medium) var(--ease-out), box-shadow var(--duration-medium) var(--ease-out);
+}
+
+.glass-panel:hover {
+    box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.4);
+}
+
+/* Buttons */
+.btn-glass {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--card-border);
+    color: var(--text-primary);
+    padding: 10px 20px;
+    border-radius: var(--radius-sm);
+    font-weight: 500;
+    transition: all var(--duration-short);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.btn-glass:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btn-glass:active {
+    transform: translateY(0);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    border-color: transparent;
+    box-shadow: 0 4px 20px var(--primary-glow);
+}
+
+.btn-primary:hover {
+    box-shadow: 0 8px 30px var(--primary-glow);
+    filter: brightness(1.1);
+}
+
+/* Inputs */
+.input-glass {
+    width: 100%;
+    background: rgba(15, 23, 42, 0.3);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-md);
+    padding: 12px 16px;
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 0.95rem;
+    transition: all var(--duration-short);
+    /* Remove default appearance */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+/* Hide Number Input Spin Buttons */
+.input-glass::-webkit-outer-spin-button,
+.input-glass::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.input-glass[type=number] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+    /* Firefox */
+}
+
+/* Custom Date Picker Icon */
+.input-glass::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    /* Invert to make it white/light for dark theme */
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+}
+
+.input-glass::-webkit-calendar-picker-indicator:hover {
+    opacity: 1;
+}
+
+.input-glass:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+    /* Larger glow */
+    background: rgba(15, 23, 42, 0.5);
+}
+
+/* Layout Container */
+.main-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar Navigation - Redesigned */
+/* Sidebar Navigation - Dynamic Hover */
+.sidebar {
+    width: 88px;
+    /* Mini width */
+    background: rgba(15, 23, 42, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-inline-end: 1px solid var(--card-border);
+    display: flex;
+    flex-direction: column;
+    padding: 24px 16px;
+    gap: 8px;
+    position: fixed;
+    top: 0;
+    inset-inline-start: 0;
+    height: 100vh;
+    z-index: 50;
+    transition: width 0.4s var(--ease-out), background 0.4s;
+    overflow: hidden !important;
+    /* Force hidden when closed */
+}
+
+/* Ensure scrollbar never shows visibly */
+.sidebar::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    background: transparent !important;
+}
+
+.sidebar:hover {
+    width: 280px;
+    background: rgba(15, 23, 42, 0.85);
+    box-shadow: 20px 0 50px rgba(0, 0, 0, 0.3);
+    overflow-y: auto !important;
+    /* Only allow scroll on hover */
+    overflow-x: hidden !important;
+    /* Never allow horizontal */
+}
+
+/* Brand Logic */
+.sidebar .brand {
+    margin-bottom: 2rem;
+    white-space: nowrap;
+    overflow: hidden;
+    transition: all 0.3s;
+}
+
+.sidebar .brand span {
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.3s;
+    display: inline-block;
+}
+
+.sidebar:hover .brand span {
+    opacity: 1;
+    transform: translateX(0);
+    transition-delay: 0.1s;
+}
+
+.nav-item {
+    width: 100%;
+    height: 48px;
+    /* Fixed height */
+    padding: 0 14px;
+    /* Center icon */
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    /* Space between icon and text */
+    color: var(--text-secondary);
+    transition: all 0.2s;
+    text-decoration: none;
+    font-weight: 500;
+    border: 1px solid transparent;
+    white-space: nowrap;
+}
+
+.nav-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+}
+
+.nav-item.active {
+    background: linear-gradient(90deg, rgba(99, 102, 241, 0.2) 0%, rgba(99, 102, 241, 0.05) 100%);
+    color: var(--primary-light);
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.nav-item svg {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    opacity: 0.8;
+}
+
+.nav-item.active svg {
+    opacity: 1;
+}
+
+.nav-text {
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.3s;
+}
+
+.sidebar:hover .nav-text {
+    opacity: 1;
+    transform: translateX(0);
+    transition-delay: 0.15s;
+}
+
+/* User Profile Mini */
+.sidebar .user-mini .font-semibold,
+.sidebar .user-mini .text-xs {
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.sidebar:hover .user-mini .font-semibold,
+.sidebar:hover .user-mini .text-xs {
+    opacity: 1;
+    transition-delay: 0.2s;
+}
+
+/* Mobile Toggle */
+.mobile-toggle {
+    display: none;
+}
+
+/* Main Content Area */
+.content-area {
+    margin-inline-start: 88px;
+    /* Match mini sidebar width */
+    flex: 1;
+    padding: 32px;
+    width: calc(100% - 88px);
+    direction: ltr;
+    transition: margin 0.4s var(--ease-out);
+}
+
+/* RTL overrides if body has dir="rtl" */
+/* RTL overrides if body has dir="rtl" */
+:where([dir="rtl"]) .content-area {
+    margin-inline-start: 0;
+    margin-inline-end: 88px;
+}
+
+/* Tables */
+.table-glass {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 8px;
+    /* Add space between rows */
+}
+
+.table-glass th {
+    text-align: center;
+    /* Logical Alignment */
+    padding: 12px 16px;
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    border-bottom: 1px solid var(--card-border);
+    letter-spacing: 0.05em;
+}
+
+/* Specific Header Alignment overrides */
+.table-glass th:nth-child(1),
+.table-glass th:nth-child(2) {
+    text-align: left;
+    padding-left: 12px;
+}
+
+.table-glass td {
+    padding: 0 8px;
+    /* Reduced cell padding for inputs */
+    border-bottom: none;
+    color: var(--text-primary);
+    text-align: start;
+    vertical-align: middle;
+}
+
+/* Row Styling */
+.table-glass tbody tr {
+    transition: background 0.2s;
+}
+
+.table-glass tbody tr:hover {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+/* Inputs inside Table */
+.table-glass .input-glass {
+    background: rgba(0, 0, 0, 0.2);
+    /* Darker/Subtle for table */
+    border: 1px solid transparent;
+    /* Cleaner look */
+    padding: 8px 12px;
+    /* Compact padding */
+    font-size: 0.9rem;
+}
+
+.table-glass .input-glass:focus {
+    background: rgba(15, 23, 42, 0.6);
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+}
+
+.table-glass .input-glass:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* Force center alignment for generic table inputs */
+.table-glass input.input-glass {
+    text-align: center;
+}
+
+/* Service & Description inputs should be Left Aligned for readability */
+.table-glass td:nth-child(1) input,
+.table-glass td:nth-child(2) input {
+    text-align: left !important;
+    padding-left: 12px;
+}
+
+
+/* Toast Notifications */
+.toast-container {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.toast {
+    background: rgba(15, 23, 42, 0.9);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--card-border);
+    border-left: 4px solid var(--primary);
+    padding: 16px 20px;
+    border-radius: var(--radius-md);
+    color: white;
+    font-size: 14px;
+    min-width: 300px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+    transform: translateX(120%);
+    transition: transform 0.4s var(--ease-out);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.toast.show {
+    transform: translateX(0);
+}
+
+.toast.success {
+    border-left-color: var(--success);
+}
+
+.toast.error {
+    border-left-color: var(--danger);
+}
+
+.toast.warning {
+    border-left-color: var(--warning);
+}
+
+/* Animation Utilities */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.5s var(--ease-out) forwards;
+}
+
+/* Print Overrides */
+/* Print Overrides - "Old" White Card Style - Single Page Optimized */
+@media print {
+    @page {
+        margin: 0.5cm;
+        /* Minimal margins to maximize space */
+        size: A4 portrait;
+        /* Force portrait */
+    }
+
+    body {
+        background: white !important;
+        color: black !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        font-family: 'Outfit', sans-serif !important;
+        /* Zoom to fit - Scale down slightly to ensure minimal overflow */
+        zoom: 0.85;
+        width: 100%;
+    }
+
+    /* Hide Elements */
+    .sidebar,
+    .actions,
+    .btn-glass,
+    .btn-primary,
+    .btn-remove,
+    .mobile-toggle,
+    .no-print,
+    .toast-container,
+    #modal {
+        display: none !important;
+    }
+
+    /* Show Print Footer */
+    .footer {
+        display: block !important;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        border-top: none !important;
+        padding-bottom: 10px;
+        /* Reduced padding */
+        color: #64748b !important;
+        font-size: 0.8rem;
+        /* Smaller footer text */
+    }
+
+    .footer a,
+    .footer span {
+        color: #64748b !important;
+    }
+
+    /* Layout Reset */
+    .main-layout,
+    .content-area {
+        display: block !important;
+        height: auto !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* Glass Panel Reset */
+    .glass-panel {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        backdrop-filter: none !important;
+    }
+
+    /* Header */
+    .flex.justify-between.items-start.mb-8 {
+        margin-bottom: 1.5rem !important;
+        /* Reduced margin */
+    }
+
+    h1 {
+        color: black !important;
+        -webkit-text-fill-color: black !important;
+        font-size: 2rem !important;
+        /* Ensure title is clear */
+    }
+
+    .logo-screen {
+        display: none !important;
+    }
+
+    .logo-print {
+        display: block !important;
+    }
+
+    /* Input "Cards" Grid */
+    .grid.gap-6 {
+        display: flex !important;
+        justify-content: space-between !important;
+        gap: 10px !important;
+        /* Reduced gap */
+        margin-bottom: 20px !important;
+        /* Reduced margin */
+        background: transparent !important;
+        border: none !important;
+        padding: 0 !important;
+    }
+
+    .grid.gap-6>div {
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 10px !important;
+        padding: 8px 12px !important;
+        /* Compact padding */
+        flex: 1 !important;
+        background: white !important;
+    }
+
+    label {
+        color: #94a3b8 !important;
+        font-size: 0.7rem !important;
+        /* Clear small label */
+        text-transform: uppercase !important;
+        letter-spacing: 0.05em !important;
+        margin-bottom: 2px !important;
+        display: block !important;
+        text-align: right !important;
+    }
+
+    input,
+    select,
+    .input-glass {
+        border: none !important;
+        padding: 0 !important;
+        background: transparent !important;
+        color: black !important;
+        font-weight: 700 !important;
+        font-size: 0.85rem !important;
+        /* Reduced print font size */
+        width: 100% !important;
+        text-align: right !important;
+        height: auto !important;
+    }
+
+    /* Table Styling */
+    .rounded-2xl.border.border-white\/5 {
+        border: 1px solid #000 !important;
+        /* Black border for table container */
+        border-radius: 12px !important;
+        overflow: hidden !important;
+        background: white !important;
+        margin-bottom: 20px !important;
+    }
+
+    .bg-black\/20 {
+        background: transparent !important;
+    }
+
+    .table-glass th {
+        background: white !important;
+        color: black !important;
+        /* Black Headers */
+        font-size: 0.75rem !important;
+        text-transform: uppercase !important;
+        font-weight: 800 !important;
+        /* Extra Bold Headers */
+        border-bottom: 1px solid #000 !important;
+        /* Black separator */
+        padding: 12px 10px 8px !important;
+    }
+
+    .table-glass td {
+        border-bottom: none !important;
+        padding: 10px 10px !important;
+        color: black !important;
+        font-size: 0.95rem !important;
+    }
+
+    /* All Inputs (Default to Bold for Numbers) */
+    .table-glass input {
+        font-weight: 700 !important;
+        color: black !important;
+    }
+
+    /* Service & Description (Normal Weight) */
+    .table-glass td:nth-child(1) input,
+    .table-glass td:nth-child(2) input {
+        font-weight: 500 !important;
+        /* Normal font for text columns */
+        text-align: left !important;
+        /* Ensure text aligns left/start */
+    }
+
+    .table-glass tr:nth-child(even) {
+        background: #f1f5f9 !important;
+        /* Slightly darker gray for rows */
+    }
+
+    /* Summary Section */
+    .flex-col.md\:flex-row {
+        flex-direction: row !important;
+    }
+
+    .bg-white\/5.rounded-xl {
+        background: white !important;
+        border: 1px solid #e2e8f0 !important;
+        box-shadow: none !important;
+        padding: 16px !important;
+        width: 300px !important;
+    }
+
+    /* Colors */
+    .text-slate-400,
+    .text-slate-200,
+    .text-slate-500 {
+        color: #64748b !important;
+    }
+
+    .text-white {
+        color: black !important;
+    }
+
+    .text-indigo-400 {
+        color: black !important;
+    }
+
+    /* Ensure table fits */
+    table {
+        width: 100% !important;
+    }
+
+    /* Fix Layout Direction if needed */
+    *[dir="rtl"] {
+        direction: rtl !important;
+    }
+}
+
+/* Global Utility to hide scrollbar but allow functionality */
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+/* End of Print Overrides */
